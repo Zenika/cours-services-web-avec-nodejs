@@ -1,22 +1,14 @@
 # Services Web avec Node.js
 
-## Installation de Node.js / io.js
+Ce cours est prévu pour être donné sur une journée.
 
-Plusieurs possibilités :
-- Installateurs pour Windows 32/64 bits et Mac fourni par le formateur
-- Distribution binaire générique pour Linux 64 bits fourni par le formateur
-- Site d'io.js : iojs.org
-- Distributions binaires pour divers Linux : https://github.com/nodesource/distributions
-
-## Plan du cours
-
-- JavaScript (en fonction de ce qu'ils connaissent déjà) : closures, protoypes, this, JSON, programmation fonctionnelle, pièges du langage, futur du langage
+- JavaScript : closures, protoypes, this, JSON, programmation fonctionnelle, pièges du langage, futur du langage
 - Node.js : motivation, architecture, fonctionnement, npm, trouver la documentation, les outils et librairies
 - Programmation asynchrone à base de callback
-- API HTTP
+- API HTTP : méthodes, status codes, headers
 - Clients et serveurs HTTP avec Node.js
 
-## Travaux pratiques
+# Travaux pratiques
 
 Les TP ont pour sujet le développement d'une application de gestion de contacts. Pour une question de simplicité, un contact est défini comme un nom, un prénom, et un identifiant.
 
@@ -26,7 +18,17 @@ Nous coderons ensuite un serveur HTTP exposant une API pour ces mêmes actions. 
 
 Pour chaque TP, le formateur fourni une suite de test vous permettant d'évaluer votre code de manière autonome. Pour qu'un TP puisse être considéré comme terminé, il faut que tous les tests de ce TP *et des TP précédents* soient au vert.
 
-### Environnement de travail
+## Pré-requis : installation de Node.js / io.js
+
+Les TP requiert l'installation de **io.js 1.x**. Le projet io.js est un fork de Node.js créé principalement pour échapper au contrôle de Joyent, l'entreprise à laquelle appartient la marque Node.js, et qui est responsable du développement de ce dernier.
+
+Plusieurs possibilités pour l'installation :
+- Installateurs pour Windows 32/64 bits et Mac fourni par le formateur
+- Distribution binaire générique pour Linux 64 bits fourni par le formateur
+- Site d'io.js : iojs.org
+- Distributions binaires pour divers Linux : https://github.com/nodesource/distributions
+
+## Squelette fourni
 
 Le formateur fourni un squelette pour commencer. Ce squelette comprend :
 - un fichier `contacts.json` qui contient 8 contacts
@@ -35,28 +37,28 @@ Le formateur fourni un squelette pour commencer. Ce squelette comprend :
 - un dossier `tests` qui contient les tests validant votre code pour chaque TP
 - éventuellement un dossier `node_modules` qui contient des librairies ; **si ce dossier n'est pas présent, il faut exécuter `npm install` dans le dossier qui contient le `package.json`**
 
-### Commandes
+## Commandes
 
 - Lancer votre application : `npm start` suivi des paramètres
 - Exécuter tous les tests : `npm run tests`
 - Exécuter les tests du TP `n` : `npm run stepn`
 - Exécuter tous les tests jusqu'au TP `n` inclus : `npm run upton`
 
-### Premier test
+## Premier test
 
 Avant de commencer, exécuter la commande `npm run step0`. Vous devez vous apparaitre un résultat de test positif. Signalez le cas inverse au formateur.
 
-### TP1
+## TP1
 
 Objectif : afficher sur la sortie standard les contacts contenus dans `contacts.json`.
 
-Le format est : un contact par ligne, le nom de famille en majuscules d'abord, suivi d'un espace, suivi du prénom.
+Le format est : un contact par ligne, le nom de famille en majuscules d'abord, suivi d'un espace, suivi du prénom. Votre application ne peut pas utiliser la sortie standard pour afficher autre chose. Vous pouvez par contre utiliser la sortie d'erreur avec `console.error`.
 
 `npm run upto1` pour valider.
 
-Documentation de Node.js : https://iojs.org/api/
+Documentation de io.js : https://iojs.org/api/
 
-### TP2
+## TP2
 
 Objectif : utiliser la librairie commander.js pour ajouter une interface en ligne de commande plus conviviale.
 
@@ -66,7 +68,7 @@ Ajouter une commande `list`. Cette commande sera celle qui affichera votre liste
 
 Documentation de commander.js : https://github.com/tj/commander.js
 
-### TP3
+## TP3
 
 Objectif : ajouter les commandes d'ajout et de suppression de contacts, avec persistence de ces actions entre chaque exécution.
 
@@ -84,6 +86,8 @@ Ajoutez une commande `serve` qui démarre le serveur. Utilisez ensuite Express p
 - POST /contacts : à partir de l'objet posté qui contient un prénom et un nom, crée un nouveau contact avec une id générée puis le sauvegarde et répond 201 Created (exemple d'objet accepté : `{"firstName": "Clark", "lastName": "Kent"}`)
 - GET /contacts/:id : retourne le contact d'id spécifiée ; si l'id n'existe pas, répond 404
 - DELETE /contacts/:id : supprime le contact d'id spécifiée, puis répond 204 No Content ; si l'id n'existe pas, répond 404
+
+Votre serveur doit impérativement afficher son port d'écoute sur la sortie standard lorsqu'il est prêt à recevoir des connexions. Le format doit être `port: <port>`. Votre serveur peut librement utiliser la sortie standard pour d'autres informations.
 
 Le serveur étant une application persistante, il peut garder les contacts en mémoire sans les sauvegarder dans le fichier. A vous de choisir ce que vous désirez faire. Si vous avez de l'avance, faites les 2 et permettez le choix au moment du démarrage. Par exemple : `npm start serve --memory`.
 
