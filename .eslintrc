@@ -1,0 +1,13 @@
+{
+  "env": {
+    "node": true
+  },
+  "ecmaFeatures": {
+    "blockBindings": true,
+  },
+  "rules": {
+    "curly": 0,
+    "no-comma-dangle": 0,
+    "no-use-before-define": [2, "nofunc"]
+  }
+}

@@ -1,1 +1,110 @@
-# cours-services-web-avec-nodejs
+# Services Web avec Node.js
+
+## Installation de Node.js / io.js
+
+Plusieurs possibilités :
+- Installateurs pour Windows 32/64 bits et Mac fourni par le formateur
+- Distribution binaire générique pour Linux 64 bits fourni par le formateur
+- Site d'io.js : iojs.org
+- Distributions binaires pour divers Linux : https://github.com/nodesource/distributions
+
+## Plan du cours
+
+- JavaScript (en fonction de ce qu'ils connaissent déjà) : closures, protoypes, this, JSON, programmation fonctionnelle, pièges du langage, futur du langage
+- Node.js : motivation, architecture, fonctionnement, npm, trouver la documentation, les outils et librairies
+- Programmation asynchrone à base de callback
+- API HTTP
+- Clients et serveurs HTTP avec Node.js
+
+## Travaux pratiques
+
+Les TP ont pour sujet le développement d'une application de gestion de contacts. Pour une question de simplicité, un contact est défini comme un nom, un prénom, et un identifiant.
+
+Nous allons commencer par programmer une application en ligne de commande capable de lister les contacts enregistrés dans un fichier, puis d'ajouter et supprimer des contacts en repercutant les changements sur le fichier.
+
+Nous coderons ensuite un serveur HTTP exposant une API pour ces mêmes actions. La gestion des contacts devient alors possible depuis n'importe quel client HTTP, comme un navigateur. Nous ajouterons un tel client à notre projet.
+
+Pour chaque TP, le formateur fourni une suite de test vous permettant d'évaluer votre code de manière autonome. Pour qu'un TP puisse être considéré comme terminé, il faut que tous les tests de ce TP *et des TP précédents* soient au vert.
+
+### Environnement de travail
+
+Le formateur fourni un squelette pour commencer. Ce squelette comprend :
+- un fichier `contacts.json` qui contient 8 contacts
+- un fichier `app.js` vide ou presque, dans lequel vous coderez votre application (il bien évidemment autorisé de créer d'autres fichiers, mais le fichier main est forcément `app.js`)
+- des fichiers `package.json` et `.npmrc` qui contiennent de la configuration et n'ont pas vocation à être modifier dans le cadre des TP (vous êtes néanmoins encouragé à regarder leur contenu)
+- un dossier `tests` qui contient les tests validant votre code pour chaque TP
+- éventuellement un dossier `node_modules` qui contient des librairies ; **si ce dossier n'est pas présent, il faut exécuter `npm install` dans le dossier qui contient le `package.json`**
+
+### Commandes
+
+- Lancer votre application : `npm start` suivi des paramètres
+- Exécuter tous les tests : `npm run tests`
+- Exécuter les tests du TP `n` : `npm run stepn`
+- Exécuter tous les tests jusqu'au TP `n` inclus : `npm run upton`
+
+### Premier test
+
+Avant de commencer, exécuter la commande `npm run step0`. Vous devez vous apparaitre un résultat de test positif. Signalez le cas inverse au formateur.
+
+### TP1
+
+Objectif : afficher sur la sortie standard les contacts contenus dans `contacts.json`.
+
+Le format est : un contact par ligne, le nom de famille en majuscules d'abord, suivi d'un espace, suivi du prénom.
+
+`npm run upto1` pour valider.
+
+Documentation de Node.js : https://iojs.org/api/
+
+### TP2
+
+Objectif : utiliser la librairie commander.js pour ajouter une interface en ligne de commande plus conviviale.
+
+Ajouter une commande `list`. Cette commande sera celle qui affichera votre liste du TP1. C'est-à-dire que pour afficher la liste, il faut lancer l'application comme ceci : `npm start list`. Faites en sorte que si aucune commande n'est spécifié (simplement `npm start`), alors c'est l'aide auto-générée par commander.js qui s'affiche.
+
+`npm run upto2` pour valider.
+
+Documentation de commander.js : https://github.com/tj/commander.js
+
+### TP3
+
+Objectif : ajouter les commandes d'ajout et de suppression de contacts, avec persistence de ces actions entre chaque exécution.
+
+Toujours en utilisant commander.js, ajouter les commandes `add <firstName> <lastName>` puis `remove <id>`. Ces deux commandes soivent sauvegardés les modifications apportées à la liste des contacts dans le fichier `contacts.json`.
+
+`npm run upto3` pour valider.
+
+## TP4
+
+Objectif : coder un serveur avec une API HTTP qui expose les fonctionnalités de gestion des contacts.
+
+Ajoutez une commande `serve` qui démarre le serveur. Utilisez ensuite Express pour mettre en place les routes suivantes :
+- GET /health : ne retourne rien mais confirme que le serveur fonctionne en répondant 200 OK
+- GET /contacts : retourne la liste des contacts au format JSON
+- POST /contacts : à partir de l'objet posté qui contient un prénom et un nom, crée un nouveau contact avec une id générée puis le sauvegarde et répond 201 Created (exemple d'objet accepté : `{"firstName": "Clark", "lastName": "Kent"}`)
+- GET /contacts/:id : retourne le contact d'id spécifiée ; si l'id n'existe pas, répond 404
+- DELETE /contacts/:id : supprime le contact d'id spécifiée, puis répond 204 No Content ; si l'id n'existe pas, répond 404
+
+Le serveur étant une application persistante, il peut garder les contacts en mémoire sans les sauvegarder dans le fichier. A vous de choisir ce que vous désirez faire. Si vous avez de l'avance, faites les 2 et permettez le choix au moment du démarrage. Par exemple : `npm start serve --memory`.
+
+`npm run upto4` pour valider.
+
+Documentation d'Express : http://expressjs.com/
+
+## TP5
+
+Objectif : coder un client HTTP qui communique avec le serveur.
+
+Note : pas de tests de validation pour ce TP
+
+Modifier votre application pour qu'au lieu de répercuter les modifications directement sur le fichier JSON, elle fasse des appels au serveur codé précedemment. Pour cela il vous faudra lancer 2 instances de l'application : une pour le serveur (`npm start serve`), et une pour le client (`npm start add/remove/list`).
+
+Documentation de request : https://github.com/request/request
+
+## TP6 (bonus)
+
+Objectif : créer une page web pour gérer les contacts via le serveur.
+
+Pré-requis : expérience en JavaScript côté navigateur (manipulation du DOM, requête Ajax).
+
+Note : pas de tests de validation, ni de correction pour ce TP.

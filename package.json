@@ -1,0 +1,35 @@
+{
+  "name": "cours-emn-nodejs-tp",
+  "version": "1.0.0",
+  "main": "app.js",
+  "config": {
+    "port": 3232,
+    "contacts": "./contacts.json"
+  },
+  "scripts": {
+    "start": "node app.js",
+    "step0": "npm test tests/step0.test.js",
+    "step1": "npm test tests/step1.test.js",
+    "step2": "npm test tests/step2.test.js",
+    "step3": "npm test tests/step3.test.js",
+    "step4": "npm test tests/step4.test.js",
+    "upto1": "npm run step1 && npm run step0",
+    "upto2": "npm run step2 && npm run upto1",
+    "upto3": "npm run step3 && npm run upto2",
+    "upto4": "npm run step4 && npm run upto3",
+    "tests": "npm run upto4",
+    "test": "mocha -t 10000"
+  },
+  "dependencies": {
+    "body-parser": "1.10.1",
+    "commander": "2.6.0",
+    "express": "4.11.0",
+    "lodash": "2.4.1"
+  },
+  "devDependencies": {
+    "chai": "1.10.0",
+    "chai-things": "0.2.0",
+    "mocha": "2.1.0",
+    "request": "2.51.0"
+  }
+}
