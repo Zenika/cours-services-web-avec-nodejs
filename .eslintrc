@@ -4,6 +4,7 @@
   },
   "ecmaFeatures": {
     "blockBindings": true,
+    "templateStrings": true
   },
   "rules": {
     "curly": 0,
