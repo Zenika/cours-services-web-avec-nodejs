@@ -55,7 +55,7 @@ function startServer(success, failure) {
             method: method,
             url: `http://127.0.0.1:${port}${path}`,
             body: postData,
-            json: !!postData
+            json: Boolean(postData)
           },
           function (err, response, body) {
             if (err) return failure(err);
@@ -78,7 +78,7 @@ function lines(stdout) {
   return stdout.toString()
     .split("\n")
     .filter(function notEmpty(line) {
-      return !!line;
+      return Boolean(line);
     })
     .filter(function notNpm(line) {
       return !line.startsWith(">");
@@ -130,14 +130,14 @@ function writeContacts(contacts, callback) {
 }
 
 function difference(contactsAfter, contactsBefore) {
-  contactsBefore = _.indexBy(contactsBefore, "id");
-  contactsAfter = _.indexBy(contactsAfter, "id");
+  const contactsByIdBefore = _.indexBy(contactsBefore, "id");
+  const contactsByIdAfter = _.indexBy(contactsAfter, "id");
   const diff = {added: [], removed: []};
-  _.each(contactsBefore, function (contact, id) {
-    if (!contactsAfter[id]) diff.removed.push(contact);
+  _.each(contactsByIdBefore, function (contact, id) {
+    if (!contactsByIdAfter[id]) diff.removed.push(contact);
   });
-  _.each(contactsAfter, function (contact, id) {
-    if (!contactsBefore[id]) diff.added.push(contact);
+  _.each(contactsByIdAfter, function (contact, id) {
+    if (!contactsByIdBefore[id]) diff.added.push(contact);
   });
   return diff;
 }
