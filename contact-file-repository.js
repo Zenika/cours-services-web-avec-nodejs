@@ -2,6 +2,7 @@
 
 const _ = require("lodash");
 const fs = require("fs");
+const shortid = require("shortid");
 const contactFile = process.env.npm_package_config_contacts;
 const read = fs.readFile.bind(null, contactFile);
 const write = fs.writeFile.bind(null, contactFile);
@@ -34,7 +35,7 @@ function get(id, callback) {
 function add(contact, callback) {
   contact = _.cloneDeep(contact); // prevents modification of the caller's object
   mutate(function (contacts) {
-    contact.id = contacts.length;
+    contact.id = shortid.generate();
     contacts.push(contact);
     return contact.id;
   }, callback);
@@ -42,10 +43,7 @@ function add(contact, callback) {
 
 function remove(id, callback) {
   mutate(function (contacts) {
-    let index = _.findIndex(contacts, {id: id});
-    if (index < 0) return false;
-    contacts.splice(index, 1);
-    return true;
+    return _.remove(contacts, {id: id}).length > 0;
   }, callback);
 }
 

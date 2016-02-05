@@ -28,7 +28,7 @@ commander.command("add <firstName> <lastName>")
 commander.command("remove <id>")
   .description("remove a contact")
   .action(function (id) {
-    contactRepository.remove(parseInt(id), function (err) {
+    contactRepository.remove(id, function (err) {
       if (err) throw err;
     });
   });
@@ -60,14 +60,14 @@ commander.command("serve")
 
     app.route("/contacts/:id")
       .get(function (req, res) {
-        contactRepository.get(parseInt(req.params.id), function (err, contact) {
+        contactRepository.get(req.params.id, function (err, contact) {
           if (err) return res.sendStatus(500);
           if (!contact) return res.sendStatus(404);
           res.json(contact);
         });
       })
       .delete(function (req, res) {
-        contactRepository.remove(parseInt(req.params.id), function (err, wasFound) {
+        contactRepository.remove(req.params.id, function (err, wasFound) {
           if (err) return res.sendStatus(500);
           if (!wasFound) return res.sendStatus(404);
           res.sendStatus(204);
