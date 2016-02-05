@@ -21,17 +21,19 @@
   "main": "app",
   "scripts": {
     "start": "node app.js",
-    "step0": "npm test tests/step0.test.js",
-    "step1": "npm test tests/step1.test.js",
-    "step2": "npm test tests/step2.test.js",
-    "step3": "npm test tests/step3.test.js",
-    "step4": "npm test tests/step4.test.js",
+    "lint": "eslint *.js",
+    "mocha": "mocha --timeout 10000",
+    "step0": "npm run mocha tests/step0.test.js",
+    "step1": "npm run mocha tests/step1.test.js",
+    "step2": "npm run mocha tests/step2.test.js",
+    "step3": "npm run mocha tests/step3.test.js",
+    "step4": "npm run mocha tests/step4.test.js",
     "upto1": "npm run step1 && npm run step0",
     "upto2": "npm run step2 && npm run upto1",
     "upto3": "npm run step3 && npm run upto2",
     "upto4": "npm run step4 && npm run upto3",
     "tests": "npm run upto4",
-    "test": "mocha --timeout 10000"
+    "test": "npm run lint && npm run tests"
   },
   "config": {
     "port": 3232,

@@ -39,7 +39,8 @@ Le formateur fourni un squelette pour commencer. Ce squelette comprend :
 
 ## Commandes
 
-- Lancer votre application : `npm start` suivi des paramètres
+- Exécuter votre application : `npm start` suivi des paramètres
+- Exécuter la vérification syntaxique et tous les tests : `npm test`
 - Exécuter tous les tests : `npm run tests`
 - Exécuter les tests du TP `n` : `npm run stepn`
 - Exécuter tous les tests jusqu'au TP `n` inclus : `npm run upton`
