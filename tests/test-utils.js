@@ -130,8 +130,8 @@ function writeContacts(contacts, callback) {
 }
 
 function difference(contactsAfter, contactsBefore) {
-  const contactsByIdBefore = _.indexBy(contactsBefore, "id");
-  const contactsByIdAfter = _.indexBy(contactsAfter, "id");
+  const contactsByIdBefore = _.keyBy(contactsBefore, "id");
+  const contactsByIdAfter = _.keyBy(contactsAfter, "id");
   const diff = {added: [], removed: []};
   _.each(contactsByIdBefore, function (contact, id) {
     if (!contactsByIdAfter[id]) diff.removed.push(contact);

@@ -1,6 +1,8 @@
 /* eslint-env mocha */
 "use strict";
 
+const path = require("path");
+const originalContacts = require(path.join("..", process.env.npm_package_config_contacts));
 const utils = require("./test-utils");
 const expect = utils.expect;
 
@@ -42,10 +44,11 @@ describe("app at step 3", function () {
 
   describe("remove", function () {
 
+    const idOfTheContactToBeRemoved = originalContacts[0].id;
     const contacts = {};
 
     before(function (done) {
-      utils.diffContactsBeforeAndAfter("remove 3", function (diff, before, after, restore) {
+      utils.diffContactsBeforeAndAfter(`remove ${idOfTheContactToBeRemoved}`, function (diff, before, after, restore) {
         contacts.removed = diff.removed;
         contacts.restore = restore;
         done();
@@ -61,7 +64,7 @@ describe("app at step 3", function () {
     });
 
     it("removes the contact with the id provided as the first parameter", function () {
-      expect(contacts.removed[0]).to.have.property("id", 3);
+      expect(contacts.removed[0]).to.have.property("id", idOfTheContactToBeRemoved);
     });
 
   });
