@@ -17,9 +17,9 @@ function getAll(callback) {
   read(function (readErr, content) {
     if (readErr) return callback(readErr);
     try {
-      callback(null, JSON.parse(content));
+      return callback(null, JSON.parse(content));
     } catch (jsonErr) {
-      callback(jsonErr);
+      return callback(jsonErr);
     }
   });
 }
@@ -54,7 +54,7 @@ function mutate(mutator, callback) {
     if (getAllErr) return callback(getAllErr);
     let result = mutator(contacts);
     write(JSON.stringify(contacts), function (writeErr) {
-      if (writeErr) callback(writeErr);
+      if (writeErr) return callback(writeErr);
       callback(null, result);
     });
   });
