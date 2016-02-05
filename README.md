@@ -2,10 +2,10 @@
 
 Ce cours est prévu pour être donné sur une journée.
 
-- JavaScript : closures, protoypes, this, JSON, programmation fonctionnelle, pièges du langage, futur du langage
+- JavaScript (en fonction de ce qu'ils connaissent déjà) : closures, protoypes, this, JSON, programmation fonctionnelle, pièges du langage, nouveautés 2015 et 2016
 - Node.js : motivation, architecture, fonctionnement, npm, trouver la documentation, les outils et librairies
-- Programmation asynchrone à base de callback
-- API HTTP : méthodes, status codes, headers
+- Programmation asynchrone à base de callback, à base de promesses, et à base de générateurs
+- API HTTP : concepts, avantages, méthodes, status codes, headers
 - Clients et serveurs HTTP avec Node.js
 
 # Travaux pratiques
@@ -39,7 +39,8 @@ Le formateur fourni un squelette pour commencer. Ce squelette comprend :
 
 ## Commandes
 
-- Lancer votre application : `npm start` suivi des paramètres
+- Exécuter votre application : `npm start` suivi des paramètres
+- Exécuter la vérification syntaxique et tous les tests : `npm test`
 - Exécuter tous les tests : `npm run tests`
 - Exécuter les tests du TP `n` : `npm run stepn`
 - Exécuter tous les tests jusqu'au TP `n` inclus : `npm run upton`
