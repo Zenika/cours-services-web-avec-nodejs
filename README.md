@@ -46,6 +46,8 @@ Le formateur fourni un squelette pour commencer. Ce squelette comprend :
 - Exécuter les tests du TP `n` : `npm run stepn`
 - Exécuter tous les tests jusqu'au TP `n` inclus : `npm run upton`
 
+Si une de ces commandes quitte avant de logguer quoi que ce soit, il s'agit sûrement d'une erreur silencieuse. Relancer la commande en ajoutant l'option `-q` juste après `npm`. Vous devriez alors avoir plus d'informations pour déterminer la source du problème.
+
 ## Premier test
 
 Avant de commencer, exécuter la commande `npm run step0`. Vous devez vous apparaitre un résultat de test positif. Signalez le cas inverse au formateur.
