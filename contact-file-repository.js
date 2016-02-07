@@ -3,7 +3,7 @@
 const _ = require("lodash");
 const fs = require("fs");
 const shortid = require("shortid");
-const contactFile = process.env.npm_package_config_contacts;
+const contactFile = "./contacts.json"
 const read = fs.readFile.bind(null, contactFile);
 const write = fs.writeFile.bind(null, contactFile);
 
