@@ -29,6 +29,12 @@ Plusieurs possibilités pour l'installation :
 - Distributions binaires pour divers Linux : https://github.com/nodesource/distributions
 - Image Docker officielle : https://hub.docker.com/_/node/
 
+## Environnement de travail
+
+Vous pouvez utiliser votre environnement de développement JavaScript préféré. Si vous n'en avez pas, je vous conseille Visual Studio Code, qui est gratuit, open-source, et qui dispose d'un débogueur Node.js intégré. Je vous conseille d'y ajouter l'extension eslint pour une meilleur détection des erreurs de code. Pour installer cette extension, taper `F1`, puis `ext install`, puis `Entrée`, puis `eslint`, puis `Entrée` et redémarrer VS Code.
+
+Une configuration pour le débogueur VS Code est fourni. Pour l'utiliser, aller dans l'onglet débogueur (4e dans le panneau de gauche), puis dérouler la liste à côté du bouton lecture. Vous aurez accès à quelques commandes qui lancent votre application en mode debug avec différents paramètres.
+
 ## Squelette fourni
 
 Le formateur fourni un squelette pour commencer. Ce squelette comprend :
