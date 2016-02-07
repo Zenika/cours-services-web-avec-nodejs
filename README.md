@@ -101,7 +101,7 @@ Ajoutez une commande `serve` qui démarre le serveur. Utilisez ensuite Express p
 
 Votre serveur doit impérativement afficher son port d'écoute sur la sortie standard lorsqu'il est prêt à recevoir des connexions. Le format doit être `port: <port>`. Votre serveur peut librement utiliser la sortie standard pour d'autres informations.
 
-Le serveur étant une application persistante, il peut garder les contacts en mémoire sans les sauvegarder dans le fichier. A vous de choisir ce que vous désirez faire. Si vous avez de l'avance, faites les 2 et permettez le choix au moment du démarrage. Par exemple : `npm start serve --memory`.
+Le serveur étant une application persistante, il peut garder les contacts en mémoire sans les sauvegarder dans le fichier. A vous de choisir ce que vous désirez faire. Si vous avez de l'avance, faites les 2 et permettez le choix au moment du démarrage. Par exemple : `npm start -- serve --memory` (noter les deux tirets supplémentaire, qui permettent à `npm` de distinguer les options de l'application de ces propres options).
 
 `npm run upto4` pour valider.
 
