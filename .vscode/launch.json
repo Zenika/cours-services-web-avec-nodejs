@@ -1,0 +1,81 @@
+{
+	"version": "0.2.0",
+	"configurations": [
+		{
+			"name": "Simple Run",
+			"type": "node",
+			"request": "launch",
+			"program": "app.js",
+			"stopOnEntry": false,
+			"args": [],
+			"cwd": ".",
+			"runtimeExecutable": null,
+			"runtimeArgs": [
+				"--nolazy"
+			],
+			"env": {
+				"NODE_ENV": "development"
+			},
+			"externalConsole": false,
+			"sourceMaps": false,
+			"outDir": null
+		},
+    {
+			"name": "List",
+			"type": "node",
+			"request": "launch",
+			"program": "app.js",
+			"stopOnEntry": false,
+			"args": ["list"],
+			"cwd": ".",
+			"runtimeExecutable": null,
+			"runtimeArgs": [
+				"--nolazy"
+			],
+			"env": {
+				"NODE_ENV": "development"
+			},
+			"externalConsole": false,
+			"sourceMaps": false,
+			"outDir": null
+		},
+    {
+			"name": "Add Clark Kent",
+			"type": "node",
+			"request": "launch",
+			"program": "app.js",
+			"stopOnEntry": false,
+			"args": ["add", "Clark", "Kent"],
+			"cwd": ".",
+			"runtimeExecutable": null,
+			"runtimeArgs": [
+				"--nolazy"
+			],
+			"env": {
+				"NODE_ENV": "development"
+			},
+			"externalConsole": false,
+			"sourceMaps": false,
+			"outDir": null
+		},
+    {
+			"name": "Remove Bruce Wayne",
+			"type": "node",
+			"request": "launch",
+			"program": "app.js",
+			"stopOnEntry": false,
+			"args": ["remove", "EktuXZAKl"],
+			"cwd": ".",
+			"runtimeExecutable": null,
+			"runtimeArgs": [
+				"--nolazy"
+			],
+			"env": {
+				"NODE_ENV": "development"
+			},
+			"externalConsole": false,
+			"sourceMaps": false,
+			"outDir": null
+		}
+	]
+}
