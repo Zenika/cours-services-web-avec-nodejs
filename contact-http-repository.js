@@ -1,11 +1,11 @@
-"use strict"
+"use strict";
 
-const request = require("request")
+const request = require("request");
 
 const port = process.env.npm_package_config_port;
-const url = `http://localhost:${port}`
+const url = `http://localhost:${port}`;
 
-module.exports = {getAll: getAll, get: get, add: add, remove: remove};
+module.exports = {getAll, get, add, remove};
 
 function getAll(callback) {
   request(
@@ -35,7 +35,7 @@ function add(contact, callback) {
   request(
     {
       method: "POST",
-      url: url,
+      url: `${url}/contacts`,
       body: contact,
       json: Boolean(contact)
     },

@@ -6,13 +6,13 @@ const express = require("express");
 
 function withRepository(f) {
   return function () {
-    return f(selectRepository(), ...arguments)
-  }
+    return f(selectRepository(), ...arguments);
+  };
 
   function selectRepository() {
-    if (commander.memory) return require("./contact-memory-repository")
-    if (commander.http) return require("./contact-http-repository")
-    return require("./contact-file-repository")
+    if (commander.memory) return require("./contact-memory-repository");
+    if (commander.http) return require("./contact-http-repository");
+    return require("./contact-file-repository");
   }
 }
 
