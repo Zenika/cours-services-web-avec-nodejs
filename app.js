@@ -3,35 +3,48 @@
 const bodyParser = require("body-parser");
 const commander = require("commander");
 const express = require("express");
-const fs = require("fs");
-const contactRepository = require("./contact-file-repository");
+
+function withRepository(f) {
+  return function () {
+    return f(selectRepository(), ...arguments)
+  }
+
+  function selectRepository() {
+    if (commander.memory) return require("./contact-memory-repository")
+    if (commander.http) return require("./contact-http-repository")
+    return require("./contact-file-repository")
+  }
+}
+
+commander.option("--memory")
+commander.option("--http")
 
 commander.command("list")
   .description("prints all contacts to stdout")
-  .action(function () {
-    contactRepository.getAll(function (err, contacts) {
+  .action(withRepository(function (repository) {
+    repository.getAll(function (err, contacts) {
       if (err) throw err;
       contacts.forEach(function (contact) {
         console.log(contact.lastName.toUpperCase(), contact.firstName);
       });
     });
-  });
+  }));
 
 commander.command("add <firstName> <lastName>")
   .description("add a contact")
-  .action(function (firstName, lastName) {
-    contactRepository.add({firstName: firstName, lastName: lastName}, function (err) {
+  .action(withRepository(function (repository, firstName, lastName) {
+    repository.add({firstName: firstName, lastName: lastName}, function (err) {
       if (err) throw err;
     });
-  });
+  }));
 
 commander.command("remove <id>")
   .description("remove a contact")
-  .action(function (id) {
-    contactRepository.remove(id, function (err) {
+  .action(withRepository(function (repository, id) {
+    repository.remove(id, function (err) {
       if (err) throw err;
     });
-  });
+  }));
 
 commander.command("serve")
   .description("start a server")
