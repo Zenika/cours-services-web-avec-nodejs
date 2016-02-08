@@ -5,7 +5,7 @@ const request = require("request");
 const port = process.env.npm_package_config_port;
 const url = `http://localhost:${port}`;
 
-module.exports = {getAll, get, add, remove};
+module.exports = {getAll: getAll, get: get, add: add, remove: remove};
 
 function getAll(callback) {
   request(
