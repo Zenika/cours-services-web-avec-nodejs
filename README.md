@@ -111,8 +111,6 @@ Documentation d'Express : http://expressjs.com/
 
 Objectif : coder un client HTTP qui communique avec le serveur.
 
-Note : pas de tests de validation pour ce TP
-
 Modifiez votre application pour qu'au lieu de répercuter les modifications directement sur le fichier JSON, elle fasse des appels au serveur codé précedemment. Pour cela il vous faudra lancer 2 instances de l'application : une pour le serveur (`npm start serve`), et une pour le client (`npm start add/remove/list`).
 
 Documentation de request : https://www.npmjs.com/package/request
