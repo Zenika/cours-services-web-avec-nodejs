@@ -14,7 +14,9 @@
 				"--nolazy"
 			],
 			"env": {
-				"NODE_ENV": "development"
+				"NODE_ENV": "development",
+        "npm_package_config_contacts": "./contacts.json",
+        "npm_package_config_port": "3232"
 			},
 			"externalConsole": false,
 			"sourceMaps": false,
@@ -33,7 +35,9 @@
 				"--nolazy"
 			],
 			"env": {
-				"NODE_ENV": "development"
+				"NODE_ENV": "development",
+        "npm_package_config_contacts": "./contacts.json",
+        "npm_package_config_port": "3232"
 			},
 			"externalConsole": false,
 			"sourceMaps": false,
@@ -52,7 +56,9 @@
 				"--nolazy"
 			],
 			"env": {
-				"NODE_ENV": "development"
+				"NODE_ENV": "development",
+        "npm_package_config_contacts": "./contacts.json",
+        "npm_package_config_port": "3232"
 			},
 			"externalConsole": false,
 			"sourceMaps": false,
@@ -71,7 +77,9 @@
 				"--nolazy"
 			],
 			"env": {
-				"NODE_ENV": "development"
+				"NODE_ENV": "development",
+        "npm_package_config_contacts": "./contacts.json",
+        "npm_package_config_port": "3232"
 			},
 			"externalConsole": false,
 			"sourceMaps": false,
