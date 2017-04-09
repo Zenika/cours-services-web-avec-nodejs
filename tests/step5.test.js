@@ -15,9 +15,9 @@ describe("app at step 5", function () {
         called = true
         res.status(200).end()
       }).listen(3232, function () {
-        utils.runApp("-- --http add Clark Kent", function (a) {
+        utils.runApp("-- --http add Clark Kent", function () {
+          server.close();
           expect(called).to.equal(true);
-          server.close()
           done();
         }, err => {throw err});
       })
@@ -30,11 +30,12 @@ describe("app at step 5", function () {
     it("calls DELETE /contacts/<id>", function (done) {
       const id = "id"
       let called = false
-      express().delete("/contacts/id", function (req, res) {
+      const server = express().delete("/contacts/id", function (req, res) {
         called = true
         res.status(200).end()
       }).listen(3232, function () {
         utils.runApp("-- --http remove id", function () {
+          server.close()
           expect(called).to.equal(true);
           done();
         }, err => {throw err});
