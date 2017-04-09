@@ -48,7 +48,7 @@ commander.command("remove <id>")
 
 commander.command("serve")
   .description("start a server")
-  .action(function () {
+  .action(withRepository(function (repository) {
     let app = express();
     app.use(bodyParser.json());
 
@@ -58,13 +58,13 @@ commander.command("serve")
 
     app.route("/contacts")
       .get(function (req, res) {
-        contactRepository.getAll(function (err, contacts) {
+        repository.getAll(function (err, contacts) {
           if (err) return res.sendStatus(500);
           res.json(contacts);
         });
       })
       .post(function (req, res) {
-        contactRepository.add(req.body, function (err, newId) {
+        repository.add(req.body, function (err, newId) {
           if (err) return res.sendStatus(500);
           let newContactLocation = `/contacts/${newId}`;
           res.status(201).location(newContactLocation).send(newContactLocation);
@@ -73,14 +73,14 @@ commander.command("serve")
 
     app.route("/contacts/:id")
       .get(function (req, res) {
-        contactRepository.get(req.params.id, function (err, contact) {
+        repository.get(req.params.id, function (err, contact) {
           if (err) return res.sendStatus(500);
           if (!contact) return res.sendStatus(404);
           res.json(contact);
         });
       })
       .delete(function (req, res) {
-        contactRepository.remove(req.params.id, function (err, wasFound) {
+        repository.remove(req.params.id, function (err, wasFound) {
           if (err) return res.sendStatus(500);
           if (!wasFound) return res.sendStatus(404);
           res.sendStatus(204);
@@ -90,7 +90,7 @@ commander.command("serve")
     let server = app.listen(process.env.npm_package_config_port, function () {
       console.log("port:", server.address().port);
     });
-  });
+  }));
 
 commander.parse(process.argv);
 
