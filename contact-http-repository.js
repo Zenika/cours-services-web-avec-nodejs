@@ -1,58 +1,61 @@
-"use strict";
-
-const request = require("request");
+const request = require('request');
 
 const port = process.env.npm_package_config_port;
 const url = `http://localhost:${port}`;
 
-module.exports = {getAll: getAll, get: get, add: add, remove: remove};
-
 function getAll(callback) {
   request(
     {
-      method: "GET",
-      url: `${url}/contacts`
+      method: 'GET',
+      url: `${url}/contacts`,
     },
-    function (err, response, body) {
-      if (err) return callback(err);
-      callback(body);
+    (err, response, body) => {
+      if (err) callback(err);
+      else callback(body);
     });
 }
 
 function get(id, callback) {
   request(
     {
-      method: "GET",
-      url: `${url}/contacts/${id}`
+      method: 'GET',
+      url: `${url}/contacts/${id}`,
     },
-    function (err, response, body) {
-      if (err) return callback(err);
-      callback(body);
+    (err, response, body) => {
+      if (err) callback(err);
+      else callback(body);
     });
 }
 
 function add(contact, callback) {
   request(
     {
-      method: "POST",
+      method: 'POST',
       url: `${url}/contacts`,
       body: contact,
-      json: Boolean(contact)
+      json: Boolean(contact),
     },
-    function (err) {
-      if (err) return callback(err);
-      callback(null);
+    (err) => {
+      if (err) callback(err);
+      else callback(null);
     });
 }
 
 function remove(id, callback) {
   request(
     {
-      method: "DELETE",
-      url: `${url}/contacts/${id}`
+      method: 'DELETE',
+      url: `${url}/contacts/${id}`,
     },
-    function (err) {
-      if (err) return callback(err);
-      callback(null);
+    (err) => {
+      if (err) callback(err);
+      else callback(null);
     });
 }
+
+module.exports = {
+  getAll,
+  get,
+  add,
+  remove,
+};

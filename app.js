@@ -1,94 +1,98 @@
-"use strict";
 
-const bodyParser = require("body-parser");
-const commander = require("commander");
-const express = require("express");
+
+const bodyParser = require('body-parser');
+const commander = require('commander');
+const express = require('express');
+const contactMemoryRepository = require('./contact-memory-repository');
+const contactHttpRepository = require('./contact-http-repository');
+const contactFileRepository = require('./contact-file-repository');
 
 function withRepository(f) {
-  return function () {
-    return f(selectRepository(), ...arguments);
-  };
-
   function selectRepository() {
-    if (commander.memory) return require("./contact-memory-repository");
-    if (commander.http) return require("./contact-http-repository");
-    return require("./contact-file-repository");
+    if (commander.memory) return contactMemoryRepository;
+    if (commander.http) return contactHttpRepository;
+    return contactFileRepository;
   }
+
+  return (...args) => f(selectRepository(), ...args);
 }
 
-commander.option("--memory")
-commander.option("--http")
+commander.option('--memory');
+commander.option('--http');
 
-commander.command("list")
-  .description("prints all contacts to stdout")
-  .action(withRepository(function (repository) {
-    repository.getAll(function (err, contacts) {
+commander.command('list')
+  .description('prints all contacts to stdout')
+  .action(withRepository((repository) => {
+    repository.getAll((err, contacts) => {
       if (err) throw err;
-      contacts.forEach(function (contact) {
+      contacts.forEach((contact) => {
         console.log(contact.lastName.toUpperCase(), contact.firstName);
       });
     });
   }));
 
-commander.command("add <firstName> <lastName>")
-  .description("add a contact")
-  .action(withRepository(function (repository, firstName, lastName) {
-    repository.add({firstName: firstName, lastName: lastName}, function (err) {
+commander.command('add <firstName> <lastName>')
+  .description('add a contact')
+  .action(withRepository((repository, firstName, lastName) => {
+    repository.add({ firstName, lastName }, (err) => {
       if (err) throw err;
     });
   }));
 
-commander.command("remove <id>")
-  .description("remove a contact")
-  .action(withRepository(function (repository, id) {
-    repository.remove(id, function (err) {
+commander.command('remove <id>')
+  .description('remove a contact')
+  .action(withRepository((repository, id) => {
+    repository.remove(id, (err) => {
       if (err) throw err;
     });
   }));
 
-commander.command("serve")
-  .description("start a server")
-  .action(withRepository(function (repository) {
-    let app = express();
+commander.command('serve')
+  .description('start a server')
+  .action(withRepository((repository) => {
+    const app = express();
     app.use(bodyParser.json());
 
-    app.get("/health", function (req, res) {
+    app.get('/health', (req, res) => {
       res.sendStatus(200);
     });
 
-    app.route("/contacts")
-      .get(function (req, res) {
-        repository.getAll(function (err, contacts) {
-          if (err) return res.sendStatus(500);
-          res.json(contacts);
+    app.route('/contacts')
+      .get((req, res) => {
+        repository.getAll((err, contacts) => {
+          if (err) res.sendStatus(500);
+          else res.json(contacts);
         });
       })
-      .post(function (req, res) {
-        repository.add(req.body, function (err, newId) {
-          if (err) return res.sendStatus(500);
-          let newContactLocation = `/contacts/${newId}`;
-          res.status(201).location(newContactLocation).send(newContactLocation);
+      .post((req, res) => {
+        repository.add(req.body, (err, newId) => {
+          if (err) {
+            res.sendStatus(500);
+          } else {
+            const newContactLocation = `/contacts/${newId}`;
+            res.status(201).location(newContactLocation).send(newContactLocation);
+          }
         });
       });
 
-    app.route("/contacts/:id")
-      .get(function (req, res) {
-        repository.get(req.params.id, function (err, contact) {
-          if (err) return res.sendStatus(500);
-          if (!contact) return res.sendStatus(404);
-          res.json(contact);
+    app.route('/contacts/:id')
+      .get((req, res) => {
+        repository.get(req.params.id, (err, contact) => {
+          if (err) res.sendStatus(500);
+          else if (!contact) res.sendStatus(404);
+          else res.json(contact);
         });
       })
-      .delete(function (req, res) {
-        repository.remove(req.params.id, function (err, wasFound) {
-          if (err) return res.sendStatus(500);
-          if (!wasFound) return res.sendStatus(404);
-          res.sendStatus(204);
+      .delete((req, res) => {
+        repository.remove(req.params.id, (err, wasFound) => {
+          if (err) res.sendStatus(500);
+          else if (!wasFound) res.sendStatus(404);
+          else res.sendStatus(204);
         });
       });
 
-    let server = app.listen(process.env.npm_package_config_port, function () {
-      console.log("port:", server.address().port);
+    const server = app.listen(process.env.npm_package_config_port, () => {
+      console.log('port:', server.address().port);
     });
   }));
 

@@ -1,33 +1,36 @@
-"use strict";
-
-const _ = require("lodash");
+// see https://github.com/benmosher/eslint-plugin-import/issues/502
+// eslint-disable-next-line import/newline-after-import
+const _ = require('lodash');
 const contacts = require(process.env.npm_package_config_contacts);
-
-module.exports = {
-  getAll: getAll,
-  get: get,
-  add: add,
-  remove: remove,
-};
 
 function getAll(callback) {
   callback(null, _.cloneDeep(contacts)); // prevents modification from the outside
 }
 
 function get(id, callback) {
-  callback(null, _.find(contacts, {id: id}));
+  callback(null, _.find(contacts, { id }));
 }
 
 function add(contact, callback) {
-  contact = _.cloneDeep(contact); // prevents modification of the caller's object
-  contact.id = contacts.length;
+  const contactCopy = _.cloneDeep(contact); // prevents modification of the caller's object
+  contactCopy.id = contacts.length;
   contacts.push(contact);
   callback(null, contact.id);
 }
 
 function remove(id, callback) {
-  let index = _.findIndex(contacts, {id: id});
-  if (index < 0) return callback(null, false);
-  contacts.splice(index, 1);
-  callback(null, true);
+  const index = _.findIndex(contacts, { id });
+  if (index >= 0) {
+    contacts.splice(index, 1);
+    callback(null, true);
+  } else {
+    callback(null, false);
+  }
 }
+
+module.exports = {
+  getAll,
+  get,
+  add,
+  remove,
+};
