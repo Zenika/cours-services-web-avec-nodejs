@@ -14,8 +14,8 @@ function get(id, callback) {
 function add(contact, callback) {
   const contactCopy = _.cloneDeep(contact); // prevents modification of the caller's object
   contactCopy.id = contacts.length;
-  contacts.push(contact);
-  callback(null, contact.id);
+  contacts.push(contactCopy);
+  callback(null, contactCopy.id);
 }
 
 function remove(id, callback) {

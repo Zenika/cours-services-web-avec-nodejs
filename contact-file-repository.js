@@ -42,8 +42,8 @@ function add(contact, callback) {
   const contactCopy = _.cloneDeep(contact); // prevents modification of the caller's object
   mutate((contacts) => {
     contactCopy.id = shortid.generate();
-    contacts.push(contact);
-    return contact.id;
+    contacts.push(contactCopy);
+    return contactCopy.id;
   }, callback);
 }
 
