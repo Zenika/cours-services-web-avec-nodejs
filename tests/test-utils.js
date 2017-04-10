@@ -1,99 +1,35 @@
-"use strict";
 
-const _ = require("lodash");
-const childProcess = require("child_process");
-const fs = require("fs");
-const path = require("path");
-const request = require("request");
+
+const _ = require('lodash');
+const childProcess = require('child_process');
+const fs = require('fs');
+const path = require('path');
+const request = require('request');
+const pkg = require('../package.json');
+const chai = require('chai');
+const chaiThings = require('chai-things');
+
 const contactFile = path.resolve(process.env.npm_package_config_contacts);
-const pkg = require("../package.json");
-
-module.exports = {
-  contactFile: contactFile,
-  expect: require("chai").use(require("chai-things")).expect,
-  runApp: runApp,
-  startServer: startServer,
-  diffContactsBeforeAndAfter: diffContactsBeforeAndAfter,
-};
 
 function runApp(args, success, failure) {
-  childProcess.exec("npm start " + args, {timeout: 10000}, function (err, stdout) {
+  childProcess.exec(`npm start ${args}`, { timeout: 10000 }, (err, stdout) => {
     if (err) return failure(err);
-    success(lines(stdout));
+    return success(lines(stdout));
   });
-}
-
-function startServer(success, failure) {
-  success = _.once(success); // ensure it's called only once
-  readContacts(function (contactsBefore) {
-    let serverProcess = childProcess.spawn("node", [pkg.main, "serve"]);
-
-    serverProcess.stderr.on("data", function onStderrData(stderr) {
-      console.error("server error:", stderr.toString())
-    });
-
-    serverProcess.stdout.on("data", function onStdoutData(stdout) {
-      let port = findPort(stdout);
-      if (!port) return;
-      success(serverInstance(serverProcess, port));
-    });
-
-    function serverInstance(serverProcess, port) {
-      return {
-        hit: hit,
-        stop: stop,
-      };
-
-      function hit(method, path, postData, success, failure) {
-        if (_.isFunction(postData)) { // if postData is omitted
-          failure = success;
-          success = postData;
-          postData = null;
-        }
-        request(
-          {
-            method: method,
-            url: `http://127.0.0.1:${port}${path}`,
-            body: postData,
-            json: Boolean(postData)
-          },
-          function (err, response, body) {
-            if (err) return failure(err);
-            response.body = tryParseAsJson(body);
-            success(response);
-          }
-        );
-      }
-
-      function stop(callback) {
-        serverProcess.kill();
-        writeContacts(contactsBefore, callback)
-      }
-    }
-  }, failure);
-
 }
 
 function lines(stdout) {
   return stdout.toString()
-    .split("\n")
-    .filter(function notEmpty(line) {
-      return Boolean(line);
-    })
-    .filter(function notNpm(line) {
-      return !line.startsWith(">");
-    });
+    .split('\n')
+    .filter(line => Boolean(line))
+    .filter(line => !line.startsWith('>'));
 }
 
 function findPort(stdout) {
   return _(lines(stdout))
-    .map(function (line) {
-      return line.match(/^port: (\d+)/);
-    })
+    .map(line => line.match(/^port: (\d+)/))
     .compact()
-    .map(function (match) {
-      return match[1];
-    })
+    .map(match => match[1])
     .compact()
     .first();
 }
@@ -106,20 +42,8 @@ function tryParseAsJson(body) {
   }
 }
 
-function diffContactsBeforeAndAfter(args, success, failure) {
-  readContacts(function (contactsBefore) {
-    runApp(args, function () {
-      readContacts(function (contactsAfter) {
-        success(difference(contactsAfter, contactsBefore), contactsBefore, contactsAfter, function restore(callback) {
-          writeContacts(contactsBefore, callback);
-        });
-      }, failure);
-    }, failure);
-  }, failure);
-}
-
 function readContacts(success, failure) {
-  fs.readFile(contactFile, function (err, content) {
+  fs.readFile(contactFile, (err, content) => {
     if (err) return failure(err);
     success(JSON.parse(content));
   });
@@ -130,14 +54,92 @@ function writeContacts(contacts, callback) {
 }
 
 function difference(contactsAfter, contactsBefore) {
-  const contactsByIdBefore = _.keyBy(contactsBefore, "id");
-  const contactsByIdAfter = _.keyBy(contactsAfter, "id");
-  const diff = {added: [], removed: []};
-  _.each(contactsByIdBefore, function (contact, id) {
+  const contactsByIdBefore = _.keyBy(contactsBefore, 'id');
+  const contactsByIdAfter = _.keyBy(contactsAfter, 'id');
+  const diff = { added: [], removed: [] };
+  _.each(contactsByIdBefore, (contact, id) => {
     if (!contactsByIdAfter[id]) diff.removed.push(contact);
   });
-  _.each(contactsByIdAfter, function (contact, id) {
+  _.each(contactsByIdAfter, (contact, id) => {
     if (!contactsByIdBefore[id]) diff.added.push(contact);
   });
   return diff;
 }
+
+function diffContactsBeforeAndAfter(args, success, failure) {
+  readContacts((contactsBefore) => {
+    runApp(args, () => {
+      readContacts((contactsAfter) => {
+        success(
+          difference(contactsAfter, contactsBefore),
+          contactsBefore,
+          contactsAfter,
+          (callback) => {
+            writeContacts(contactsBefore, callback);
+          });
+      }, failure);
+    }, failure);
+  }, failure);
+}
+
+function startServer(startServerSuccess, startServerFailure) {
+  startServerSuccess = _.once(startServerSuccess); // eslint-disable-line no-param-reassign
+  readContacts((contactsBefore) => {
+    function serverInstance(serverProcess, port) {
+      function hit(method, uriPath, postData, hitSuccess, hitFailure) {
+        if (_.isFunction(postData)) { // if postData is omitted
+          /* eslint-disable no-param-reassign */
+          hitFailure = hitSuccess;
+          hitSuccess = postData;
+          postData = null;
+          /* eslint-disable no-param-reassign */
+        }
+        request(
+          {
+            method,
+            url: `http://127.0.0.1:${port}${uriPath}`,
+            body: postData,
+            json: Boolean(postData),
+          },
+          (err, response, body) => {
+            if (err) {
+              hitFailure(err);
+            } else {
+              response.body = tryParseAsJson(body);
+              hitSuccess(response);
+            }
+          });
+      }
+
+      function stop(callback) {
+        serverProcess.kill();
+        writeContacts(contactsBefore, callback);
+      }
+
+      return {
+        hit,
+        stop,
+      };
+    }
+
+    const serverProcess = childProcess.spawn('node', [pkg.main, 'serve']);
+
+    serverProcess.stderr.on('data', (stderr) => {
+      console.error('server error:', stderr.toString());
+    });
+
+    serverProcess.stdout.on('data', (stdout) => {
+      const port = findPort(stdout);
+      if (!port) return;
+      startServerSuccess(serverInstance(serverProcess, port));
+    });
+  }, startServerFailure);
+}
+
+module.exports = {
+  contactFile,
+  expect: chai.use(chaiThings).expect,
+  runApp,
+  startServer,
+  diffContactsBeforeAndAfter,
+};

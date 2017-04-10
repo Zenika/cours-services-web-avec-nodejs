@@ -22,7 +22,7 @@
   "scripts": {
     "start": "node app.js",
     "lint": "eslint *.js",
-    "lint:fix": "eslint --fix *.js",
+    "lint:fix": "eslint --fix *.js tests/*.js",
     "mocha": "mocha --timeout 10000",
     "step0": "npm run mocha tests/step0.test.js",
     "step1": "npm run mocha tests/step1.test.js",
