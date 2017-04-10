@@ -1,12 +1,11 @@
 /* eslint-env mocha */
-"use strict";
+/* eslint-disable no-unused-expressions */
 
-const expect = require("./test-utils").expect;
 
-describe("app at step 0", function () {
+const { expect } = require('./test-utils');
 
-  it("passes this test", function () {
+describe('app at step 0', () => {
+  it('passes this test', () => {
     expect(true).to.be.true;
   });
-
 });

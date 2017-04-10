@@ -1,16 +1,16 @@
 {
   "name": "cours-services-web-avec-nodejs",
   "version": "1.0.0",
-  "homepage": "https://github.com/ZenikaOuest/cours-services-web-avec-nodejs",
-  "bugs": "https://github.com/ZenikaOuest/cours-services-web-avec-nodejs/issues",
+  "homepage": "https://github.com/Zenika/cours-services-web-avec-nodejs",
+  "bugs": "https://github.com/Zenika/cours-services-web-avec-nodejs/issues",
   "licence": "MIT",
-  "author": "Zenika Ouest <info-ouest@zenika.com> (http://www.zenika.com)",
+  "author": "Zenika <info@zenika.com> (http://www.zenika.com)",
   "contributors": [
     "Hugo Wood <hugo.wood@zenika.com>"
   ],
   "repository": {
     "type": "git",
-    "url": "https://github.com/ZenikaOuest/cours-services-web-avec-nodejs.git"
+    "url": "https://github.com/Zenika/cours-services-web-avec-nodejs.git"
   },
   "private": true,
   "engines": {
@@ -22,7 +22,7 @@
   "scripts": {
     "start": "node app.js",
     "lint": "eslint *.js",
-    "lint:fix": "eslint --fix *.js",
+    "lint:fix": "eslint --fix *.js tests/*.js",
     "mocha": "mocha --timeout 10000",
     "step0": "npm run mocha tests/step0.test.js",
     "step1": "npm run mocha tests/step1.test.js",

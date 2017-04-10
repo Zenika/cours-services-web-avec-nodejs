@@ -1,14 +1,10 @@
 /* eslint-env mocha */
-"use strict";
 
-const utils = require("./test-utils");
-const expect = utils.expect;
-const runApp = utils.runApp;
+const { expect, runApp } = require('./test-utils');
 
-describe("app at step 2", function () {
-
-  it("outputs commander's help when no command is specified", function (done) {
-    runApp("", function (outputLines) {
+describe('app at step 2', () => {
+  it("outputs commander's help when no command is specified", (done) => {
+    runApp('', (outputLines) => {
       expect(outputLines).to.include.something.that.match(/^\s+Usage:/);
       expect(outputLines).to.include.something.that.match(/^\s+Commands:$/);
       expect(outputLines).to.include.something.that.match(/^\s+list/);
@@ -17,5 +13,4 @@ describe("app at step 2", function () {
       done();
     });
   });
-
 });
