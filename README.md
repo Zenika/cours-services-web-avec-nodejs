@@ -2,7 +2,7 @@
 
 Ce cours est prévu pour être donné sur une journée.
 
-- JavaScript (en fonction de ce qu'ils connaissent déjà) : closures, protoypes, this, JSON, programmation fonctionnelle, pièges du langage, nouveautés 2015 et 2016
+- JavaScript (en fonction de ce qu'ils connaissent déjà) : closures, protoypes, this, JSON, programmation fonctionnelle, pièges du langage, nouveautés
 - Node.js : motivation, architecture, fonctionnement, npm, trouver la documentation, les outils et librairies
 - Programmation asynchrone à base de callback, à base de promesses, et à base de générateurs
 - API HTTP : concepts, avantages, méthodes, status codes, headers
