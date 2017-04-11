@@ -2,7 +2,7 @@
 
 Ce cours est prévu pour être donné sur une journée.
 
-- JavaScript (en fonction de ce qu'ils connaissent déjà) : closures, protoypes, this, JSON, programmation fonctionnelle, pièges du langage, nouveautés 2015 et 2016
+- JavaScript (en fonction de ce qu'ils connaissent déjà) : closures, protoypes, this, JSON, programmation fonctionnelle, pièges du langage, nouveautés
 - Node.js : motivation, architecture, fonctionnement, npm, trouver la documentation, les outils et librairies
 - Programmation asynchrone à base de callback, à base de promesses, et à base de générateurs
 - API HTTP : concepts, avantages, méthodes, status codes, headers
@@ -78,6 +78,8 @@ Ajoutez une commande `list`. Cette commande sera celle qui affichera votre liste
 
 Documentation de commander.js : https://www.npmjs.com/package/commander
 
+⚠ Les méthodes `commander.command(command, description)` et `commander.command(command).description(description)` ne font pas la même chose. C'est la seconde qu'il faut utiliser.
+
 ## TP3
 
 Objectif : ajouter les commandes d'ajout et de suppression de contacts, avec persistence de ces actions entre chaque exécution.
@@ -93,7 +95,7 @@ Documentation de shortid : https://www.npmjs.com/package/shortid
 Objectif : coder un serveur avec une API HTTP qui expose les fonctionnalités de gestion des contacts.
 
 Ajoutez une commande `serve` qui démarre le serveur. Utilisez ensuite Express pour mettre en place les routes suivantes :
-- GET `/health` : ne retourne rien mais confirme que le serveur fonctionne en répondant 200 OK
+- GET `/health` : ne retourne rien mais confirme que le serveur fonctionne en répondant 204 No Content
 - GET `/contacts` : retourne la liste des contacts au format JSON
 - POST `/contacts` : à partir de l'objet posté qui contient un prénom et un nom, crée un nouveau contact avec une id générée puis le sauvegarde et répond 201 Created (exemple d'objet accepté : `{"firstName": "Clark", "lastName": "Kent"}`)
 - GET `/contacts/:id` : retourne le contact d'id spécifiée ; si l'id n'existe pas, répond 404
@@ -115,12 +117,14 @@ Objectif : coder un client HTTP qui communique avec le serveur.
 
 Modifiez votre application pour qu'au lieu de répercuter les modifications directement sur le fichier JSON, elle fasse des appels au serveur codé précedemment. Pour cela il vous faudra lancer 2 instances de l'application : une pour le serveur (`npm start serve`), et une pour le client (`npm start add/remove/list`).
 
+`npm run upto5` pour valider (ne valide que le `add` et le `remove`).
+
 Documentation de request : https://www.npmjs.com/package/request
 
 ## TP6 (bonus)
 
 Objectif : créer une page web pour gérer les contacts via le serveur.
 
-Pré-requis : expérience en JavaScript côté navigateur (manipulation du DOM, requête Ajax).
+Pré-requis : expérience en JavaScript côté navigateur (manipulation du DOM, requête HTTP).
 
-Note : pas de tests de validation, ni de correction pour ce TP.
+Note : pas de tests de validation pour ce TP.
