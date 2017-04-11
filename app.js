@@ -1,10 +1,12 @@
 const bodyParser = require('body-parser');
 const commander = require('commander');
 const express = require('express');
-const serveStatic = require('serve-static')
+const serveStatic = require('serve-static');
 const contactMemoryRepository = require('./contact-memory-repository');
 const contactHttpRepository = require('./contact-http-repository');
 const contactFileRepository = require('./contact-file-repository');
+const promiseRepository = require('./promise-repository');
+const repositoryWithUpdate = require('./repository-with-update');
 
 function withRepository(f) {
   function selectRepository() {
@@ -13,11 +15,17 @@ function withRepository(f) {
     return contactFileRepository;
   }
 
-  return (...args) => f(selectRepository(), ...args);
+  function wrapWithPromises(repository) {
+    if (commander.promise) return repositoryWithUpdate(promiseRepository(repository));
+    return repositoryWithUpdate.callbacks(repository);
+  }
+
+  return (...args) => f(wrapWithPromises(selectRepository()), ...args);
 }
 
 commander.option('--memory');
 commander.option('--http');
+commander.option('--promise');
 
 commander.command('list')
   .description('prints all contacts to stdout')
@@ -42,6 +50,14 @@ commander.command('remove <id>')
   .description('remove a contact')
   .action(withRepository((repository, id) => {
     repository.remove(id, (err) => {
+      if (err) throw err;
+    });
+  }));
+
+commander.command('update <id> <firstName> <lastName>')
+  .description('update a contact')
+  .action(withRepository((repository, id, firstName, lastName) => {
+    repository.update(id, { firstName, lastName }, (err) => {
       if (err) throw err;
     });
   }));
