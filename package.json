@@ -14,7 +14,7 @@
   },
   "private": true,
   "engines": {
-    "node": ">=5.0",
+    "node": ">=7.8",
     "npm": ">=2.0"
   },
   "engineStrict": true,
@@ -30,12 +30,14 @@
     "step3": "npm run mocha tests/step3.test.js",
     "step4": "npm run mocha tests/step4.test.js",
     "step5": "npm run mocha tests/step5.test.js",
+    "step6": "npm run mocha tests/step6.test.js",
     "upto1": "npm run step1 && npm run step0",
     "upto2": "npm run step2 && npm run upto1",
     "upto3": "npm run step3 && npm run upto2",
     "upto4": "npm run step4 && npm run upto3",
     "upto5": "npm run step5 && npm run upto4",
-    "tests": "npm run upto5",
+    "upto6": "npm run step6 && npm run upto5",
+    "tests": "npm run upto6",
     "test": "npm run lint && npm run tests"
   },
   "config": {
@@ -45,6 +47,7 @@
   "dependencies": {
     "body-parser": "^1.17.1",
     "commander": "2.9.0",
+    "denodeify": "^1.2.1",
     "express": "^4.15.2",
     "lodash": "^4.17.4",
     "request": "^2.81.0",

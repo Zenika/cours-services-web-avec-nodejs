@@ -121,7 +121,15 @@ Modifiez votre application pour qu'au lieu de répercuter les modifications dire
 
 Documentation de request : https://www.npmjs.com/package/request
 
-## TP6 (bonus)
+## TP6
+
+Objectif : ajouter la fonctionnalité de mise à jour d'un contact en s'appuyant sur le code existant
+
+Modifiez votre application pour qu'elle supporte une commande `update <id> <firstName> <lastName>` qui met à jour les données du contact d'id spécifiée. Si le contact n'existe pas, l'application doit quitter sans erreur.
+
+`npm run upto6` pour valider. ⚠ Le test active l'option `--memory` introduite au TP4, si elle est présente.
+
+## TP7 (bonus)
 
 Objectif : créer une page web pour gérer les contacts via le serveur.
 
