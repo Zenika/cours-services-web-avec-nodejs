@@ -121,6 +121,6 @@ Documentation de request : https://www.npmjs.com/package/request
 
 Objectif : créer une page web pour gérer les contacts via le serveur.
 
-Pré-requis : expérience en JavaScript côté navigateur (manipulation du DOM, requête Ajax).
+Pré-requis : expérience en JavaScript côté navigateur (manipulation du DOM, requête HTTP).
 
-Note : pas de tests de validation, ni de correction pour ce TP.
+Note : pas de tests de validation pour ce TP.
