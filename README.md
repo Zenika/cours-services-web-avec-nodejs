@@ -31,7 +31,7 @@ Plusieurs possibilités pour l'installation :
 
 ## Environnement de travail
 
-Vous pouvez utiliser votre environnement de développement JavaScript préféré. Si vous n'en avez pas, je vous conseille Visual Studio Code, qui est gratuit, open-source, et qui dispose d'un débogueur Node.js intégré. Je vous conseille d'y ajouter l'extension eslint pour une meilleur détection des erreurs de code. Pour installer cette extension, taper `F1`, puis `ext install`, puis `Entrée`, puis `eslint`, puis `Entrée` et redémarrer VS Code.
+Vous pouvez utiliser votre environnement de développement JavaScript préféré. Si vous n'en avez pas, je vous conseille Visual Studio Code, qui est gratuit, open-source, et qui dispose d'un débogueur Node.js intégré. Je vous conseille d'y ajouter l'extension ESLint pour une meilleure détection des erreurs de code. Pour installer cette extension, allez dans l'onglet des extensions (5e dans le panneau de gauche), cherchez `eslint` puis installez l'extension. Cliquez `Reload` à la fin de l'installation. Je recommande par ailleurs de configurer cette extension pour corriger automatiquement les erreurs de style. Pour cela, dirigez-vous vers `File > Preferences > Settings` et ajoutez (soit dans user settings soit dans les workspace settings) l'option `"eslint.autoFixOnSave": true`.
 
 Une configuration pour le débogueur VS Code est fourni. Pour l'utiliser, allez dans l'onglet débogueur (4e dans le panneau de gauche), puis déroulez la liste à côté du bouton lecture. Vous aurez accès à quelques commandes qui lancent votre application en mode debug avec différents paramètres.
 
