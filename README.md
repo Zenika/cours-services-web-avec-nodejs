@@ -107,6 +107,8 @@ Le serveur étant une application persistante, il peut garder les contacts en m�
 
 Documentation d'Express : http://expressjs.com/
 
+Astuce : pour supporter facilement les requêtes/réponses au format JSON, utilisez le module `body-parser` et [sa méthode `.json()`](https://www.npmjs.com/package/body-parser#bodyparserjsonoptions) comme [ceci](https://www.npmjs.com/package/body-parser#expressconnect-top-level-generic).
+
 ## TP5
 
 Objectif : coder un client HTTP qui communique avec le serveur.
