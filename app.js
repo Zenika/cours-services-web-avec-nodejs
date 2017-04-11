@@ -1,8 +1,7 @@
-
-
 const bodyParser = require('body-parser');
 const commander = require('commander');
 const express = require('express');
+const serveStatic = require('serve-static')
 const contactMemoryRepository = require('./contact-memory-repository');
 const contactHttpRepository = require('./contact-http-repository');
 const contactFileRepository = require('./contact-file-repository');
@@ -51,7 +50,9 @@ commander.command('serve')
   .description('start a server')
   .action(withRepository((repository) => {
     const app = express();
-    app.use(bodyParser.json());
+    app
+      .use(bodyParser.json())
+      .use(serveStatic('./public'));
 
     app.get('/health', (req, res) => {
       res.sendStatus(200);
