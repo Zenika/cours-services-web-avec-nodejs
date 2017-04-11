@@ -2,88 +2,52 @@
 	"version": "0.2.0",
 	"configurations": [
 		{
+			"type": "node",
+			"request": "launch",
 			"name": "Simple Run",
-			"type": "node",
-			"request": "launch",
-			"program": "app.js",
-			"stopOnEntry": false,
+			"program": "${workspaceRoot}/app.js",
 			"args": [],
-			"cwd": ".",
-			"runtimeExecutable": null,
-			"runtimeArgs": [
-				"--nolazy"
-			],
 			"env": {
 				"NODE_ENV": "development",
         "npm_package_config_contacts": "./contacts.json",
         "npm_package_config_port": "3232"
-			},
-			"externalConsole": false,
-			"sourceMaps": false,
-			"outDir": null
+			}
 		},
     {
+			"type": "node",
+			"request": "launch",
 			"name": "List",
-			"type": "node",
-			"request": "launch",
-			"program": "app.js",
-			"stopOnEntry": false,
+			"program": "${workspaceRoot}/app.js",
 			"args": ["list"],
-			"cwd": ".",
-			"runtimeExecutable": null,
-			"runtimeArgs": [
-				"--nolazy"
-			],
 			"env": {
 				"NODE_ENV": "development",
         "npm_package_config_contacts": "./contacts.json",
         "npm_package_config_port": "3232"
-			},
-			"externalConsole": false,
-			"sourceMaps": false,
-			"outDir": null
+			}
 		},
     {
+			"type": "node",
+			"request": "launch",
 			"name": "Add Clark Kent",
-			"type": "node",
-			"request": "launch",
-			"program": "app.js",
-			"stopOnEntry": false,
-			"args": ["add", "Clark", "Kent"],
-			"cwd": ".",
-			"runtimeExecutable": null,
-			"runtimeArgs": [
-				"--nolazy"
-			],
+			"program": "${workspaceRoot}/app.js",
+			"args": ["--memory", "add", "Clark", "Kent"],
 			"env": {
 				"NODE_ENV": "development",
         "npm_package_config_contacts": "./contacts.json",
         "npm_package_config_port": "3232"
-			},
-			"externalConsole": false,
-			"sourceMaps": false,
-			"outDir": null
+			}
 		},
     {
-			"name": "Remove Bruce Wayne",
 			"type": "node",
 			"request": "launch",
-			"program": "app.js",
-			"stopOnEntry": false,
-			"args": ["remove", "EktuXZAKl"],
-			"cwd": ".",
-			"runtimeExecutable": null,
-			"runtimeArgs": [
-				"--nolazy"
-			],
+			"name": "Remove Bruce Wayne",
+			"program": "${workspaceRoot}/app.js",
+			"args": ["--memory", "remove", "EktuXZAKl"],
 			"env": {
 				"NODE_ENV": "development",
         "npm_package_config_contacts": "./contacts.json",
         "npm_package_config_port": "3232"
-			},
-			"externalConsole": false,
-			"sourceMaps": false,
-			"outDir": null
+			}
 		}
 	]
 }

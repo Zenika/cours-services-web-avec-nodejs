@@ -37,8 +37,9 @@
     "upto4": "npm run step4 && npm run upto3",
     "upto5": "npm run step5 && npm run upto4",
     "upto6": "npm run step6 && npm run upto5",
-    "tests": "npm run upto6",
-    "test": "npm run lint && npm run tests"
+    "test:nolint": "npm run upto6",
+    "test:oneprocess": "npm run mocha tests/*.test.js",
+    "test": "npm run lint && npm run test:nolint"
   },
   "config": {
     "port": 3232,
