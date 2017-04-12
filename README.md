@@ -97,7 +97,7 @@ Objectif : coder un serveur avec une API HTTP qui expose les fonctionnalités de
 Ajoutez une commande `serve` qui démarre le serveur. Utilisez ensuite Express pour mettre en place les routes suivantes :
 - GET `/health` : ne retourne rien mais confirme que le serveur fonctionne en répondant 204 No Content
 - GET `/contacts` : retourne la liste des contacts au format JSON
-- POST `/contacts` : à partir de l'objet posté qui contient un prénom et un nom, crée un nouveau contact avec une id générée puis le sauvegarde et répond 201 Created (exemple d'objet accepté : `{"firstName": "Clark", "lastName": "Kent"}`)
+- POST `/contacts` : à partir de l'objet posté qui contient un prénom et un nom, crée un nouveau contact avec une id générée puis le sauvegarde et répond 201 Created (exemple d'objet accepté : `{"firstName": "Clark", "lastName": "Kent"}`) ; le test vous demande aussi de répondre l'URL du nouveau contact (sous la forme `/contact/id`) à la fois dans le header `Location` et le body
 - GET `/contacts/:id` : retourne le contact d'id spécifiée ; si l'id n'existe pas, répond 404
 - DELETE `/contacts/:id` : supprime le contact d'id spécifiée, puis répond 204 No Content ; si l'id n'existe pas, répond 404
 
@@ -115,7 +115,7 @@ Astuce : pour supporter facilement les requêtes/réponses au format JSON, utili
 
 Objectif : coder un client HTTP qui communique avec le serveur.
 
-Modifiez votre application pour qu'au lieu de répercuter les modifications directement sur le fichier JSON, elle fasse des appels au serveur codé précedemment. Pour cela il vous faudra lancer 2 instances de l'application : une pour le serveur (`npm start serve`), et une pour le client (`npm start add/remove/list`).
+Modifiez votre application pour qu'au lieu de répercuter les modifications directement sur le fichier JSON, elle fasse des appels au serveur codé précedemment. Pour cela il vous faudra lancer 2 instances de l'application : une pour le serveur (`npm start serve`), et une pour le client (`npm start add/remove/list`). Vous pouvez utiliser une option `--http` pour activer ce comportement.
 
 `npm run upto5` pour valider (ne valide que le `add` et le `remove`).
 
