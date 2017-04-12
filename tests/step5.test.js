@@ -21,7 +21,7 @@ describe('app at step 5', () => {
         })
         .listen(3232, () => {
           utils.runApp(
-            `-- --http --promise add ${expectedContact.firstName} ${expectedContact.lastName}`,
+            `-- --http add ${expectedContact.firstName} ${expectedContact.lastName}`,
             () => {
               server.close();
               expect(called).to.equal(true);
@@ -42,7 +42,7 @@ describe('app at step 5', () => {
           res.status(200).end();
         })
         .listen(3232, () => {
-          utils.runApp(`-- --http --promise remove ${expectedId}`, () => {
+          utils.runApp(`-- --http remove ${expectedId}`, () => {
             server.close();
             expect(called).to.equal(true);
             done();
