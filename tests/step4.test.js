@@ -32,8 +32,8 @@ describe('app server at step 4', () => {
       }, done);
     });
 
-    it('responds 200 OK', () => {
-      expect(response.statusCode).to.equal(200);
+    it('responds 204 No Content', () => {
+      expect(response.statusCode).to.equal(204);
     });
   });
 
