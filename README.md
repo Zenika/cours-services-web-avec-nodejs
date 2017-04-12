@@ -136,3 +136,5 @@ Objectif : créer une page web pour gérer les contacts via le serveur.
 Pré-requis : expérience en JavaScript côté navigateur (manipulation du DOM, requête HTTP).
 
 Note : pas de tests de validation pour ce TP.
+
+Astuce : vous pouvez utiliser le module [serve-static](https://www.npmjs.com/package/serve-static) comme [ceci](https://www.npmjs.com/package/serve-static#simple) pour que votre serveur Node.js héberge votre page web.
