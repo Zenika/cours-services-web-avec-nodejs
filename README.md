@@ -125,7 +125,7 @@ Documentation de request : https://www.npmjs.com/package/request
 
 Objectif : ajouter la fonctionnalité de mise à jour d'un contact en s'appuyant sur le code existant
 
-Modifiez votre application pour qu'elle supporte une commande `update <id> <firstName> <lastName>` qui met à jour les données du contact d'id spécifiée. Si le contact n'existe pas, l'application doit quitter sans erreur.
+Modifiez votre application pour qu'elle supporte une commande `update <id> <firstName> <lastName>` qui met à jour les données du contact d'id spécifiée. Si le contact n'existe pas, l'application doit quitter sans erreur. Essayez de ré-utiliser (sans copier-coller !) le code de `add` et `remove` pour coder `update`.
 
 `npm run upto6` pour valider. ⚠ Le test active l'option `--memory` introduite au TP4, si elle est présente.
 
