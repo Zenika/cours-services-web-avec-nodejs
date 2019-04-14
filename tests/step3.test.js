@@ -4,18 +4,22 @@ const path = require('path');
 const utils = require('./test-utils');
 
 const originalContacts = require(path.join('..', process.env.npm_package_config_contacts));
-const expect = utils.expect;
+const { expect } = utils;
 
 describe('app at step 3', () => {
   describe('add', () => {
     const contacts = {};
 
     before((done) => {
-      utils.diffContactsBeforeAndAfter('add Chuck Norris', (diff, before, after, restore) => {
-        contacts.added = diff.added;
-        contacts.restore = restore;
-        done();
-      }, done);
+      utils.diffContactsBeforeAndAfter(
+        'add Chuck Norris',
+        (diff, before, after, restore) => {
+          contacts.added = diff.added;
+          contacts.restore = restore;
+          done();
+        },
+        done,
+      );
     });
 
     after((done) => {
@@ -44,11 +48,15 @@ describe('app at step 3', () => {
     const contacts = {};
 
     before((done) => {
-      utils.diffContactsBeforeAndAfter(`remove ${idOfTheContactToBeRemoved}`, (diff, before, after, restore) => {
-        contacts.removed = diff.removed;
-        contacts.restore = restore;
-        done();
-      }, done);
+      utils.diffContactsBeforeAndAfter(
+        `remove ${idOfTheContactToBeRemoved}`,
+        (diff, before, after, restore) => {
+          contacts.removed = diff.removed;
+          contacts.restore = restore;
+          done();
+        },
+        done,
+      );
     });
 
     after((done) => {

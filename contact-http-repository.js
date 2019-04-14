@@ -12,7 +12,8 @@ function getAll(callback) {
     (err, response, body) => {
       if (err) callback(err);
       else callback(body);
-    });
+    },
+  );
 }
 
 function get(id, callback) {
@@ -24,7 +25,8 @@ function get(id, callback) {
     (err, response, body) => {
       if (err) callback(err);
       else callback(body);
-    });
+    },
+  );
 }
 
 function add(contact, callback) {
@@ -38,7 +40,8 @@ function add(contact, callback) {
     (err) => {
       if (err) callback(err);
       else callback(null);
-    });
+    },
+  );
 }
 
 function remove(id, callback) {
@@ -50,7 +53,8 @@ function remove(id, callback) {
     (err) => {
       if (err) callback(err);
       else callback(null);
-    });
+    },
+  );
 }
 
 module.exports = {

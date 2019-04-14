@@ -1,28 +1,27 @@
-
-
 const _ = require('lodash');
 const childProcess = require('child_process');
 const fs = require('fs');
 const path = require('path');
 const request = require('request');
-const pkg = require('../package.json');
 const chai = require('chai');
 const chaiThings = require('chai-things');
+const pkg = require('../package.json');
 
 const contactFile = path.resolve(process.env.npm_package_config_contacts);
+
+function lines(stdout) {
+  return stdout
+    .toString()
+    .split('\n')
+    .filter(line => Boolean(line))
+    .filter(line => !line.startsWith('>'));
+}
 
 function runApp(args, success, failure) {
   childProcess.exec(`npm start ${args}`, { timeout: 10000 }, (err, stdout) => {
     if (err) return failure(err);
     return success(lines(stdout));
   });
-}
-
-function lines(stdout) {
-  return stdout.toString()
-    .split('\n')
-    .filter(line => Boolean(line))
-    .filter(line => !line.startsWith('>'));
 }
 
 function findPort(stdout) {
@@ -45,7 +44,7 @@ function tryParseAsJson(body) {
 function readContacts(success, failure) {
   fs.readFile(contactFile, (err, content) => {
     if (err) return failure(err);
-    success(JSON.parse(content));
+    return success(JSON.parse(content));
   });
 }
 
@@ -68,17 +67,22 @@ function difference(contactsAfter, contactsBefore) {
 
 function diffContactsBeforeAndAfter(args, success, failure) {
   readContacts((contactsBefore) => {
-    runApp(args, () => {
-      readContacts((contactsAfter) => {
-        success(
-          difference(contactsAfter, contactsBefore),
-          contactsBefore,
-          contactsAfter,
-          (callback) => {
-            writeContacts(contactsBefore, callback);
-          });
-      }, failure);
-    }, failure);
+    runApp(
+      args,
+      () => {
+        readContacts((contactsAfter) => {
+          success(
+            difference(contactsAfter, contactsBefore),
+            contactsBefore,
+            contactsAfter,
+            (callback) => {
+              writeContacts(contactsBefore, callback);
+            },
+          );
+        }, failure);
+      },
+      failure,
+    );
   }, failure);
 }
 
@@ -87,7 +91,8 @@ function startServer(startServerSuccess, startServerFailure) {
   readContacts((contactsBefore) => {
     function serverInstance(serverProcess, port) {
       function hit(method, uriPath, postData, hitSuccess, hitFailure) {
-        if (_.isFunction(postData)) { // if postData is omitted
+        if (_.isFunction(postData)) {
+          // if postData is omitted
           /* eslint-disable no-param-reassign */
           hitFailure = hitSuccess;
           hitSuccess = postData;
@@ -108,7 +113,8 @@ function startServer(startServerSuccess, startServerFailure) {
               response.body = tryParseAsJson(body);
               hitSuccess(response);
             }
-          });
+          },
+        );
       }
 
       function stop(callback) {

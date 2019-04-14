@@ -2,7 +2,7 @@
 
 const utils = require('./test-utils');
 
-const expect = utils.expect;
+const { expect } = utils;
 
 describe('app server at step 4', () => {
   let server;
@@ -26,10 +26,15 @@ describe('app server at step 4', () => {
     let response;
 
     before((done) => {
-      server.hit('get', '/health', (healthResponse) => {
-        response = healthResponse;
-        done();
-      }, done);
+      server.hit(
+        'get',
+        '/health',
+        (healthResponse) => {
+          response = healthResponse;
+          done();
+        },
+        done,
+      );
     });
 
     it('responds 200 OK', () => {
@@ -41,10 +46,15 @@ describe('app server at step 4', () => {
     let response;
 
     before((done) => {
-      server.hit('get', '/contacts', (getAllResponse) => {
-        response = getAllResponse;
-        done();
-      }, done);
+      server.hit(
+        'get',
+        '/contacts',
+        (getAllResponse) => {
+          response = getAllResponse;
+          done();
+        },
+        done,
+      );
     });
 
     it('responds 200 OK', () => {
@@ -63,13 +73,23 @@ describe('app server at step 4', () => {
       let expectedContact;
 
       before((done) => {
-        server.hit('get', '/contacts', (getAllResponse) => {
-          expectedContact = getAllResponse.body[0];
-          server.hit('get', `/contacts/${expectedContact.id}`, (getOneResponse) => {
-            response = getOneResponse;
-            done();
-          }, done);
-        }, done);
+        server.hit(
+          'get',
+          '/contacts',
+          (getAllResponse) => {
+            expectedContact = getAllResponse.body[0];
+            server.hit(
+              'get',
+              `/contacts/${expectedContact.id}`,
+              (getOneResponse) => {
+                response = getOneResponse;
+                done();
+              },
+              done,
+            );
+          },
+          done,
+        );
       });
 
       it('responds 200 OK', () => {
@@ -90,10 +110,15 @@ describe('app server at step 4', () => {
       let response;
 
       before((done) => {
-        server.hit('get', '/contacts/absent_id', (getOneResponse) => {
-          response = getOneResponse;
-          done();
-        }, done);
+        server.hit(
+          'get',
+          '/contacts/absent_id',
+          (getOneResponse) => {
+            response = getOneResponse;
+            done();
+          },
+          done,
+        );
       });
 
       it('responds 404 Not Found', () => {
@@ -107,10 +132,16 @@ describe('app server at step 4', () => {
     let response;
 
     before((done) => {
-      server.hit('post', '/contacts', newContact, (response_) => {
-        response = response_;
-        done();
-      }, done);
+      server.hit(
+        'post',
+        '/contacts',
+        newContact,
+        (response_) => {
+          response = response_;
+          done();
+        },
+        done,
+      );
     });
 
     it('responds 201 Created', () => {
@@ -127,11 +158,16 @@ describe('app server at step 4', () => {
 
     it('ensures the new contact is at the returned location', (done) => {
       console.log(response.body);
-      server.hit('get', response.body, (getNewContactResponse) => {
-        expect(getNewContactResponse.body).to.be.an('object');
-        expect(getNewContactResponse.body).to.include(newContact);
-        done();
-      }, done);
+      server.hit(
+        'get',
+        response.body,
+        (getNewContactResponse) => {
+          expect(getNewContactResponse.body).to.be.an('object');
+          expect(getNewContactResponse.body).to.include(newContact);
+          done();
+        },
+        done,
+      );
     });
   });
 
@@ -140,13 +176,23 @@ describe('app server at step 4', () => {
     let targetContact;
 
     before((done) => {
-      server.hit('get', '/contacts', (getAllResponse) => {
-        targetContact = getAllResponse.body[0];
-        server.hit('delete', `/contacts/${targetContact.id}`, (deleteResponse) => {
-          response = deleteResponse;
-          done();
-        }, done);
-      }, done);
+      server.hit(
+        'get',
+        '/contacts',
+        (getAllResponse) => {
+          targetContact = getAllResponse.body[0];
+          server.hit(
+            'delete',
+            `/contacts/${targetContact.id}`,
+            (deleteResponse) => {
+              response = deleteResponse;
+              done();
+            },
+            done,
+          );
+        },
+        done,
+      );
     });
 
     it('responds 204 No Content', () => {
@@ -158,10 +204,15 @@ describe('app server at step 4', () => {
     });
 
     it('responds 404 Not Found on subsequent calls', (done) => {
-      server.hit('delete', `/contacts/${targetContact.id}`, (deleteAgainResponse) => {
-        expect(deleteAgainResponse.statusCode).to.equal(404);
-        done();
-      }, done);
+      server.hit(
+        'delete',
+        `/contacts/${targetContact.id}`,
+        (deleteAgainResponse) => {
+          expect(deleteAgainResponse.statusCode).to.equal(404);
+          done();
+        },
+        done,
+      );
     });
   });
 });
