@@ -3,17 +3,21 @@
 const utils = require('./test-utils');
 
 const contacts = require(utils.contactFile);
-const expect = utils.expect;
-const runApp = utils.runApp;
+const { expect } = utils;
+const { runApp } = utils;
 
 describe('app at step 1', () => {
   let outputLines;
 
   before('run the app and collect output', (done) => {
-    runApp('list', (outputLines_) => {
-      outputLines = outputLines_;
-      done();
-    }, done);
+    runApp(
+      'list',
+      (outputLines_) => {
+        outputLines = outputLines_;
+        done();
+      },
+      done,
+    );
   });
 
   it('outputs as many lines as there are contacts in contacts.json', () => {

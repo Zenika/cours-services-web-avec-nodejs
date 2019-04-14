@@ -4,8 +4,7 @@ const bodyParser = require('body-parser');
 const express = require('express');
 const utils = require('./test-utils');
 
-const expect = utils.expect;
-
+const { expect } = utils;
 
 describe('app at step 5', () => {
   describe('add', () => {
@@ -27,7 +26,10 @@ describe('app at step 5', () => {
               expect(called).to.equal(true);
               done();
             },
-            (err) => { throw err; });
+            (err) => {
+              throw err;
+            },
+          );
         });
     });
   });
@@ -42,11 +44,17 @@ describe('app at step 5', () => {
           res.status(200).end();
         })
         .listen(3232, () => {
-          utils.runApp(`-- --http remove ${expectedId}`, () => {
-            server.close();
-            expect(called).to.equal(true);
-            done();
-          }, (err) => { throw err; });
+          utils.runApp(
+            `-- --http --promise remove ${expectedId}`,
+            () => {
+              server.close();
+              expect(called).to.equal(true);
+              done();
+            },
+            (err) => {
+              throw err;
+            },
+          );
         });
     });
   });
