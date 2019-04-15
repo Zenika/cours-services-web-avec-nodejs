@@ -20,7 +20,7 @@ const typeDefs = gql`
   }
 
   type Query {
-    contacts: [Contact]
+    getContacts: [Contact]
   }
 `;
 

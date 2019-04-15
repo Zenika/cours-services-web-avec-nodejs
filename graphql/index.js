@@ -41,7 +41,7 @@ const resolvers = {
     },
   },
   Query: {
-    contacts: () => contacts,
+    getContacts: () => contacts,
   },
 };
 
