@@ -48,7 +48,7 @@ function add(contact, callback) {
 }
 
 function remove(id, callback) {
-  mutate(contacts => _.remove(contacts, { id }).length > 0, callback);
+  mutate((contacts) => _.remove(contacts, { id }).length > 0, callback);
 }
 
 module.exports = {
